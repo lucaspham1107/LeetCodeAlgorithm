@@ -49,6 +49,10 @@ object LinkedListSolution {
         return prev
     }
 
+    /**
+     * According to explanation at last lesson
+     * Slow continue to travel from y and head  after x more steps will meet at the start of the circle
+     */
     fun detectCycle(head: ListNode?): ListNode? {
         var slow = head
         var fast = head
@@ -73,11 +77,37 @@ object LinkedListSolution {
         while (fast?.next != null) {
             fast = fast.next?.next
             slow = slow?.next
-            if (slow != null) {
-                if(fast == slow)
-                    return true
-            }
+            if (fast === slow)
+                return true
         }
         return false
+    }
+
+    /**
+     * Compare the value of the current node with the nodes after it.
+     * If they are equal : Move the next pointer to next node.
+     * Else : Move current node to next node and continue comparing.
+     * TC: O(length of list)
+     * SC: O(1)
+     */
+    fun deleteDuplicates(head: ListNode?): ListNode? {
+        var curr = head
+        while (curr?.next != null) {
+            if (curr.`val` == curr.next!!.`val`)
+                curr.next = curr.next!!.next
+            else curr = curr.next
+        }
+        return head
+    }
+
+    fun isPalindrome(head: ListNode?): Boolean {
+        if (head == null) return false
+        var curr = head
+        var s = ""
+        while (curr != null) {
+            s+= curr.`val`
+            curr = curr.next
+        }
+        return s == s.reversed()
     }
 }
